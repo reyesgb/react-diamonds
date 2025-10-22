@@ -2,9 +2,13 @@ import React from "react";
 
 function Login() {
   return (
-    <div>
+    <div className="container">
       <h1>Iniciar Sesión</h1>
-      <p>Bienvenido nuevamente a Pacrima. Inicia sesión para continuar.</p>
+      <form>
+        <input type="text" placeholder="Usuario" />
+        <input type="password" placeholder="Contraseña" />
+        <button type="submit">Ingresar</button>
+      </form>
     </div>
   );
 }

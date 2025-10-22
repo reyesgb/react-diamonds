@@ -1,15 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function NavbarPacrima() {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="light" expand="lg" className="shadow-sm mb-4">
       <Container>
-        <Navbar.Brand as={Link} to="/">Pacrima</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/" className="fw-bold text-primary">
+          Pacrima
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="ms-auto">
             <Nav.Link as={Link} to="/">Inicio</Nav.Link>
             <Nav.Link as={Link} to="/servicios">Servicios</Nav.Link>
             <Nav.Link as={Link} to="/nosotros">Nosotros</Nav.Link>

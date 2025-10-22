@@ -1,6 +1,6 @@
 import React from "react";
 
-function Inicio() {
+function Contacto() {
   return (
     <div className="container">
       <h1>Página de inicio</h1>
@@ -9,4 +9,4 @@ function Inicio() {
   );
 }
 
-export default Inicio;
+export default Contacto;

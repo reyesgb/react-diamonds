@@ -2,9 +2,14 @@ import React from "react";
 
 function Register() {
   return (
-    <div>
-      <h1>Registrarse</h1>
-      <p>Crea tu cuenta para acceder a nuestros servicios.</p>
+    <div className="container">
+      <h1>Registro de Usuario</h1>
+      <form>
+        <input type="text" placeholder="Nombre" />
+        <input type="email" placeholder="Correo" />
+        <input type="password" placeholder="Contraseña" />
+        <button type="submit">Registrarse</button>
+      </form>
     </div>
   );
 }
