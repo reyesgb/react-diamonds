@@ -5,6 +5,7 @@ import "./assets/css/estilos.css";
 
 // Componentes
 import NavbarPacrima from "./components/NavbarPacrima";
+
 import Footer from "./components/Footer";
 
 // Páginas principales
@@ -22,6 +23,19 @@ import DetallesSeguridad from "./pages/DetallesSeguridad";
 import DetallesApps from "./pages/DetallesApps";
 import DetallesCloud from "./pages/DetallesCloud";
 import DetallesSoporte from "./pages/DetallesSoporte";
+
+
+// Detalles del perfil de los socios
+import PerfilPablo from "./pages/PerfilPablo";
+import PerfilCristian from "./pages/PerfilCristian";
+import PerfilMatias from "./pages/PerfilMatias";
+
+
+import Cristian from "./pages/PerfilCristian";
+import Matias from "./pages/PerfilMatias";
+import Pablo from "./pages/PerfilPablo";
+
+
 
 function App() {
   return (
@@ -43,6 +57,23 @@ function App() {
           <Route path="/servicios/apps" element={<DetallesApps />} />
           <Route path="/servicios/cloud" element={<DetallesCloud />} />
           <Route path="/servicios/soporte" element={<DetallesSoporte />} />
+
+          {/* Perfiles de socios */}
+<Route path="/persona1" element={<PerfilPablo />} />
+<Route path="/persona2" element={<PerfilCristian />} />
+<Route path="/persona3" element={<PerfilMatias />} />
+
+<Route path="/Cristian" element={<Cristian/>} />
+<Route path="/Matias" element={<Matias/>} />
+<Route path="/Pablo" element={<Pablo/>} />
+
+
+<Route path="/socios/pablo" element={<PerfilPablo />} />
+<Route path="/socios/cristian" element={<PerfilCristian />} />
+<Route path="/socios/matias" element={<PerfilMatias />} />
+
+
+          
         </Routes>
       </div>
       <Footer />
