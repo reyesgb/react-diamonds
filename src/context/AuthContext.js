@@ -1,35 +1,51 @@
-// ...existing code...
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
 export function AuthProvider({ children }) {
-  const [isAdmin, setIsAdmin] = useState(() => {
-    return localStorage.getItem("isAdmin") === "true";
-  });
+  const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
-  }, [isAdmin]);
+    // Cargar sesión desde localStorage
+    const userData = localStorage.getItem("userLogged");
+    const adminData = localStorage.getItem("adminLogged");
 
-  function login(email, password) {
-    if (email === "admin@admin.com" && password === "admin") {
+    if (adminData === "true") setIsAdmin(true);
+    else if (userData) setUser(JSON.parse(userData));
+  }, []);
+
+  const login = (data) => {
+    if (data.email === "admin@admin.cl" && data.pass === "admin123") {
+      localStorage.setItem("adminLogged", "true");
       setIsAdmin(true);
-      return true;
+      return { success: true, isAdmin: true };
+    } else {
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const found = users.find(
+        (u) => u.email === data.email.trim() && u.pass === data.pass
+      );
+      if (found) {
+        localStorage.setItem("userLogged", JSON.stringify(found));
+        setUser(found);
+        return { success: true, isAdmin: false };
+      }
     }
-    return false;
-  }
+    return { success: false };
+  };
 
-  function logout() {
+  const logout = () => {
+    localStorage.removeItem("userLogged");
+    localStorage.removeItem("adminLogged");
+    setUser(null);
     setIsAdmin(false);
-  }
+  };
 
-  const value = { isAdmin, login, logout };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, isAdmin, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
-// ...existing code...
+
+export const useAuth = () => useContext(AuthContext);

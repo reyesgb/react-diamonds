@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // ✅
 
 function Login() {
   const [form, setForm] = useState({ email: "", pass: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ usamos el contexto
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,26 +18,13 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    // Obtener usuarios registrados
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const result = login(form);
 
-    // Verificar si el usuario existe
-    const found = users.find(
-      (u) => u.email === form.email.trim() && u.pass === form.pass
-    );
-
-    if (found) {
-      localStorage.setItem("userLogged", JSON.stringify(found));
-      navigate("/"); // redirige al inicio
-    } else if (
-      form.email === "admin@admin.cl" &&
-      form.pass === "admin123"
-    ) {
-      // acceso de administrador
-      localStorage.setItem("adminLogged", "true");
-      navigate("/admin/dashboard");
+    if (result.success) {
+      if (result.isAdmin) navigate("/admin/dashboard");
+      else navigate("/");
     } else {
-      setError("Correo o contraseña incorrectos.");
+      setError("❌ Correo o contraseña incorrectos.");
     }
   };
 
@@ -81,7 +70,6 @@ function Login() {
           Regístrate aquí
         </a>
       </p>
-
     </Container>
   );
 }

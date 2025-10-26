@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Navbar, Container, Nav, Form, FormControl } from "react-bootstrap";
+import { Navbar, Container, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useCarrito } from "../context/CarritoContext";
+import { useAuth } from "../context/AuthContext"; // ✅
 
 function NavbarPacrima() {
   const navigate = useNavigate();
   const { carrito } = useCarrito();
+  const { user, isAdmin, logout } = useAuth(); // ✅
   const [busqueda, setBusqueda] = useState("");
   const [sugerencias, setSugerencias] = useState([]);
 
@@ -16,9 +18,6 @@ function NavbarPacrima() {
     { nombre: "Aplicaciones Móviles", ruta: "/servicios/apps" },
     { nombre: "Consultoría Cloud", ruta: "/servicios/cloud" },
     { nombre: "Soporte Técnico", ruta: "/servicios/soporte" },
-    { nombre: "Pablo Reyes", ruta: "/nosotros#pablo" },
-    { nombre: "Cristian Padilla", ruta: "/nosotros#cristian" },
-    { nombre: "Matías Vargas", ruta: "/nosotros#matias" },
   ];
 
   const manejarCambio = (e) => {
@@ -43,7 +42,6 @@ function NavbarPacrima() {
   return (
     <Navbar bg="light" expand="lg" className="shadow-sm mb-4">
       <Container fluid className="px-4">
-        {/* IZQUIERDA */}
         <div className="d-flex align-items-center">
           <Navbar.Brand as={Link} to="/" className="fw-bold me-3">
             Pacrima
@@ -55,7 +53,6 @@ function NavbarPacrima() {
             <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
           </Nav>
 
-          {/* Separador vertical 1 */}
           <div
             style={{
               borderLeft: "1px solid #ccc",
@@ -65,24 +62,35 @@ function NavbarPacrima() {
           ></div>
         </div>
 
-        {/* DERECHA */}
         <div className="d-flex align-items-center ms-auto gap-3">
-          <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
+          {!user && !isAdmin ? (
+            <>
+              <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
+              <div
+                style={{
+                  borderLeft: "1px solid #ccc",
+                  height: "25px",
+                }}
+              ></div>
+              <Nav.Link as={Link} to="/register">Registrar</Nav.Link>
+            </>
+          ) : (
+            <>
+              {isAdmin && (
+                <Nav.Link as={Link} to="/admin/dashboard" className="fw-semibold text-danger">
+                  Panel Admin
+                </Nav.Link>
+              )}
+              <Button variant="outline-danger" size="sm" onClick={logout}>
+                Cerrar sesión
+              </Button>
+            </>
+          )}
 
-          {/* Separador vertical 2 */}
-          <div
-            style={{
-              borderLeft: "1px solid #ccc",
-              height: "25px",
-            }}
-          ></div>
-
-          <Nav.Link as={Link} to="/register">Registrar</Nav.Link>
           <Nav.Link as={Link} to="/carrito" className="fw-semibold">
             🛒 ({carrito.length})
           </Nav.Link>
 
-          {/* Buscador */}
           <div className="position-relative" style={{ width: "250px" }}>
             <Form className="d-flex">
               <FormControl
