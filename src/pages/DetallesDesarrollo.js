@@ -1,37 +1,25 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../assets/css/estilos.css";
-import { Card } from "react-bootstrap";
-import DesarrolloImg from "../assets/images/Servicios/dev.jpg";
+import { useCarrito } from "../context/CarritoContext";
+import { Button, Container } from "react-bootstrap";
 
 function DetallesDesarrollo() {
+  const { agregarAlCarrito } = useCarrito();
+
+  const servicio = {
+    id: 1,
+    titulo: "Desarrollo Web",
+    precio: 50000,
+  };
+
   return (
-    <div className="container mt-5">
-      <div className="row align-items-center">
-        <div className="col-md-6 text-center">
-          <Card.Img
-                  variant="top"
-                  src={DesarrolloImg}
-                  alt="desarrollo web"
-                  className="rounded-circle mx-auto"
-                />
-        </div>
-        <div className="col-md-6 mt-4 mt-md-0">
-          <h2 className="text-primary fw-bold">Desarrollo Web</h2>
-          <p className="text-muted">
-            Creamos sitios web modernos, rápidos y adaptativos. Utilizamos las tecnologías más recientes
-            para ofrecer experiencias digitales funcionales, atractivas y seguras.
-          </p>
-          <ul className="list-unstyled mb-3">
-            <li>✅ Diseño responsive</li>
-            <li>✅ Optimización SEO</li>
-            <li>✅ Conexión con bases de datos</li>
-            <li>✅ Escalabilidad garantizada</li>
-          </ul>
-          <button className="btn btn-primary px-4">Solicitar servicio</button>
-        </div>
-      </div>
-    </div>
+    <Container className="py-5">
+      <h1>{servicio.titulo}</h1>
+      <p>Desarrollo de sitios web modernos y escalables.</p>
+      <h4>Precio: ${servicio.precio}</h4>
+      <Button variant="primary" onClick={() => agregarAlCarrito(servicio)}>
+        Añadir al carrito 🛒
+      </Button>
+    </Container>
   );
 }
 

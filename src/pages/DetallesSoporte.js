@@ -1,36 +1,27 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../assets/css/estilos.css";
-import { Card } from "react-bootstrap";
-import SoporteImg from "../assets/images/Servicios/soporte.jpg";
+import { Container, Button } from "react-bootstrap";
+import { useCarrito } from "../context/CarritoContext";
 
 function DetallesSoporte() {
+  const { agregarAlCarrito } = useCarrito();
+
+  const servicio = {
+    id: 6,
+    titulo: "Soporte Técnico",
+    descripcion:
+      "Brindamos soporte remoto y presencial para resolver incidencias técnicas y garantizar el funcionamiento de tus sistemas.",
+    precio: 40000,
+  };
+
   return (
-    <div className="container mt-5">
-      <div className="row align-items-center">
-        <div className="col-md-6 text-center">
-          <Card.Img
-                  variant="top"
-                  src={SoporteImg}
-                  alt="soporte técnico"
-                  className="rounded-circle mx-auto"
-                />
-        </div>
-        <div className="col-md-6 mt-4 mt-md-0">
-          <h2 className="text-primary fw-bold">Soporte Técnico</h2>
-          <p className="text-muted">
-            Ofrecemos soporte técnico remoto y presencial para resolver incidencias y mantener tu sistema siempre operativo.
-          </p>
-          <ul className="list-unstyled mb-3">
-            <li>✅ Atención personalizada</li>
-            <li>✅ Mantenimiento preventivo</li>
-            <li>✅ Diagnóstico de fallas</li>
-            <li>✅ Asistencia 24/7</li>
-          </ul>
-          <button className="btn btn-primary px-4">Solicitar servicio</button>
-        </div>
-      </div>
-    </div>
+    <Container className="py-5">
+      <h1>{servicio.titulo}</h1>
+      <p>{servicio.descripcion}</p>
+      <h4>💰 Precio: ${servicio.precio}</h4>
+      <Button variant="primary" onClick={() => agregarAlCarrito(servicio)}>
+        Añadir al carrito 🛒
+      </Button>
+    </Container>
   );
 }
 

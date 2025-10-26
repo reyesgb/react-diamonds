@@ -1,37 +1,27 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../assets/css/estilos.css";
-import { Card } from "react-bootstrap";
-import DesarrolloImg from "../assets/images/Servicios/datos.jpg";
-
+import { Container, Button } from "react-bootstrap";
+import { useCarrito } from "../context/CarritoContext";
 
 function DetallesCloud() {
+  const { agregarAlCarrito } = useCarrito();
+
+  const servicio = {
+    id: 5,
+    titulo: "Consultoría Cloud",
+    descripcion:
+      "Te ayudamos a migrar tus sistemas a la nube, optimizando costos y garantizando seguridad en tu infraestructura digital.",
+    precio: 70000,
+  };
+
   return (
-    <div className="container mt-5">
-      <div className="row align-items-center">
-        <div className="col-md-6 text-center">
-          <Card.Img
-                  variant="top"
-                  src={DesarrolloImg}
-                  alt="consultoría cloud"
-                  className="rounded-circle mx-auto"
-                />
-        </div>
-        <div className="col-md-6 mt-4 mt-md-0">
-          <h2 className="text-primary fw-bold">Consultoría Cloud</h2>
-          <p className="text-muted">
-            Te ayudamos a migrar tus sistemas a la nube con seguridad, optimizando costos y mejorando la escalabilidad de tu negocio.
-          </p>
-          <ul className="list-unstyled mb-3">
-            <li>✅ Migración a AWS, Azure o Google Cloud</li>
-            <li>✅ Automatización de procesos</li>
-            <li>✅ Respaldo y recuperación</li>
-            <li>✅ Monitoreo en tiempo real</li>
-          </ul>
-          <button className="btn btn-primary px-4">Solicitar servicio</button>
-        </div>
-      </div>
-    </div>
+    <Container className="py-5">
+      <h1>{servicio.titulo}</h1>
+      <p>{servicio.descripcion}</p>
+      <h4>💰 Precio: ${servicio.precio}</h4>
+      <Button variant="primary" onClick={() => agregarAlCarrito(servicio)}>
+        Añadir al carrito 🛒
+      </Button>
+    </Container>
   );
 }
 

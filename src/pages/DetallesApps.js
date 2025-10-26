@@ -1,37 +1,27 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../assets/css/estilos.css";
-import { Card } from "react-bootstrap";
-// Nota: 'apps.jpg' no existe en la carpeta de imágenes; usar 'marketing.jpg' como fallback existente
-import AppsImg from "../assets/images/Servicios/marketing.jpg";
+import { Container, Button } from "react-bootstrap";
+import { useCarrito } from "../context/CarritoContext";
 
 function DetallesApps() {
+  const { agregarAlCarrito } = useCarrito();
+
+  const servicio = {
+    id: 4,
+    titulo: "Aplicaciones Móviles",
+    descripcion:
+      "Desarrollamos aplicaciones nativas e híbridas para Android e iOS, enfocadas en el rendimiento y la experiencia del usuario.",
+    precio: 100000,
+  };
+
   return (
-    <div className="container mt-5">
-      <div className="row align-items-center">
-        <div className="col-md-6 text-center">
-          <Card.Img
-                  variant="top"
-                  src={AppsImg}
-                  alt="aplicaciones móviles"
-                  className="rounded-circle mx-auto"
-                />
-        </div>
-        <div className="col-md-6 mt-4 mt-md-0">
-          <h2 className="text-primary fw-bold">Aplicaciones Móviles</h2>
-          <p className="text-muted">
-            Creamos aplicaciones móviles nativas e híbridas que se adaptan a las necesidades de tu negocio.
-          </p>
-          <ul className="list-unstyled mb-3">
-            <li>✅ Apps para Android e iOS</li>
-            <li>✅ Desarrollo con React Native</li>
-            <li>✅ Diseño intuitivo y rápido</li>
-            <li>✅ Integración con APIs externas</li>
-          </ul>
-          <button className="btn btn-primary px-4">Solicitar servicio</button>
-        </div>
-      </div>
-    </div>
+    <Container className="py-5">
+      <h1>{servicio.titulo}</h1>
+      <p>{servicio.descripcion}</p>
+      <h4>💰 Precio: ${servicio.precio}</h4>
+      <Button variant="primary" onClick={() => agregarAlCarrito(servicio)}>
+        Añadir al carrito 🛒
+      </Button>
+    </Container>
   );
 }
 

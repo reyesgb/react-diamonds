@@ -1,38 +1,27 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../assets/css/estilos.css";
-import { Card } from "react-bootstrap";
-import UXImg from "../assets/images/Servicios/ux.jpg";
-
+import { Container, Button } from "react-bootstrap";
+import { useCarrito } from "../context/CarritoContext";
 
 function DetallesUX() {
+  const { agregarAlCarrito } = useCarrito();
+
+  const servicio = {
+    id: 2,
+    titulo: "Diseño UX/UI",
+    descripcion:
+      "Diseños atractivos y funcionales que priorizan la experiencia del usuario y la accesibilidad digital.",
+    precio: 60000,
+  };
+
   return (
-    <div className="container mt-5">
-      <div className="row align-items-center">
-        <div className="col-md-6 text-center">
-          <Card.Img
-                  variant="top"
-                  src={UXImg}
-                  alt="ux/ui"
-                  className="rounded-circle mx-auto"
-                />
-        </div>
-        <div className="col-md-6 mt-4 mt-md-0">
-          <h2 className="text-primary fw-bold">Diseño UX/UI</h2>
-          <p className="text-muted">
-            Desarrollamos interfaces centradas en el usuario. Nuestra prioridad es que tus clientes 
-            disfruten una experiencia digital fluida, accesible y moderna.
-          </p>
-          <ul className="list-unstyled mb-3">
-            <li>✅ Prototipos en Figma</li>
-            <li>✅ Diseño accesible y funcional</li>
-            <li>✅ Test de usabilidad</li>
-            <li>✅ Identidad visual coherente</li>
-          </ul>
-          <button className="btn btn-primary px-4">Solicitar servicio</button>
-        </div>
-      </div>
-    </div>
+    <Container className="py-5">
+      <h1>{servicio.titulo}</h1>
+      <p>{servicio.descripcion}</p>
+      <h4>💰 Precio: ${servicio.precio}</h4>
+      <Button variant="primary" onClick={() => agregarAlCarrito(servicio)}>
+        Añadir al carrito 🛒
+      </Button>
+    </Container>
   );
 }
 
