@@ -60,7 +60,7 @@ function NavbarPacrima() {
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
         <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-          DIAMONDS
+          Pacrima
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="navbar-nav" />
@@ -70,8 +70,6 @@ function NavbarPacrima() {
             <Nav.Link onClick={() => navigate("/servicios")}>Servicios</Nav.Link>
             <Nav.Link onClick={() => navigate("/nosotros")}>Nosotros</Nav.Link>
             <Nav.Link onClick={() => navigate("/contacto")}>Contacto</Nav.Link>
-            <Nav.Link onClick={() => navigate("/register")}>Registrarse</Nav.Link>
-            <Nav.Link onClick={() => navigate("/login")}>Iniciar Sesion</Nav.Link>
           </Nav>
 
           {/* 🔎 Buscador Predictivo */}
