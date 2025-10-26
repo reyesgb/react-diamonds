@@ -1,13 +1,20 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/estilos.css";
+import { Card } from "react-bootstrap";
+import SoporteImg from "../assets/images/Servicios/soporte.jpg";
 
 function DetallesSoporte() {
   return (
     <div className="container mt-5">
       <div className="row align-items-center">
         <div className="col-md-6 text-center">
-          <img src="/images/soporte.jpg" alt="Soporte Técnico" className="img-fluid rounded shadow" />
+          <Card.Img
+                  variant="top"
+                  src={SoporteImg}
+                  alt="soporte técnico"
+                  className="rounded-circle mx-auto"
+                />
         </div>
         <div className="col-md-6 mt-4 mt-md-0">
           <h2 className="text-primary fw-bold">Soporte Técnico</h2>

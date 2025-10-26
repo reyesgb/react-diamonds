@@ -1,13 +1,21 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/estilos.css";
+import { Card } from "react-bootstrap";
+// Nota: 'apps.jpg' no existe en la carpeta de imágenes; usar 'marketing.jpg' como fallback existente
+import AppsImg from "../assets/images/Servicios/marketing.jpg";
 
 function DetallesApps() {
   return (
     <div className="container mt-5">
       <div className="row align-items-center">
         <div className="col-md-6 text-center">
-          <img src="/images/apps-moviles.jpg" alt="Aplicaciones móviles" className="img-fluid rounded shadow" />
+          <Card.Img
+                  variant="top"
+                  src={AppsImg}
+                  alt="aplicaciones móviles"
+                  className="rounded-circle mx-auto"
+                />
         </div>
         <div className="col-md-6 mt-4 mt-md-0">
           <h2 className="text-primary fw-bold">Aplicaciones Móviles</h2>

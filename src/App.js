@@ -59,24 +59,19 @@ function App() {
           <Route path="/servicios/soporte" element={<DetallesSoporte />} />
 
           {/* Perfiles de socios */}
-<Route path="/persona1" element={<PerfilPablo />} />
-<Route path="/persona2" element={<PerfilCristian />} />
-<Route path="/persona3" element={<PerfilMatias />} />
+          <Route path="/persona1" element={<PerfilPablo />} />
+          <Route path="/persona2" element={<PerfilCristian />} />
+          <Route path="/persona3" element={<PerfilMatias />} />
 
-<Route path="/Cristian" element={<Cristian/>} />
-<Route path="/Matias" element={<Matias/>} />
-<Route path="/Pablo" element={<Pablo/>} />
-
-
-<Route path="/socios/pablo" element={<PerfilPablo />} />
-<Route path="/socios/cristian" element={<PerfilCristian />} />
-<Route path="/socios/matias" element={<PerfilMatias />} />
+          <Route path="/Cristian" element={<Cristian/>} />
+          <Route path="/Matias" element={<Matias/>} />
+          <Route path="/Pablo" element={<Pablo/>} />
 
 
+          <Route path="/socios/pablo" element={<PerfilPablo />} />
+          <Route path="/socios/cristian" element={<PerfilCristian />} />
+          <Route path="/socios/matias" element={<PerfilMatias />} />
 
-
-
-          
         </Routes>
       </div>
       <Footer />
