@@ -29,6 +29,14 @@ import PerfilPablo from "./pages/PerfilPablo";
 import PerfilCristian from "./pages/PerfilCristian";
 import PerfilMatias from "./pages/PerfilMatias";
 
+
+// Panel de administración
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminServicios from "./pages/AdminServicios";
+import AdminPanel from "./pages/AdminPanel";
+
+
+
 // ...existing code...
 
 function App() {
@@ -65,6 +73,12 @@ function App() {
           <Route path="/socios/pablo" element={<PerfilPablo />} />
           <Route path="/socios/cristian" element={<PerfilCristian />} />
           <Route path="/socios/matias" element={<PerfilMatias />} />
+
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/servicios" element={<AdminServicios />} />
+          <Route path="/admin/dashboard" element={<AdminPanel />} />
+
+
         </Routes>
       </div>
       <Footer />
