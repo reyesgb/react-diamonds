@@ -34,7 +34,7 @@ import PerfilMatias from "./pages/PerfilMatias";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminServicios from "./pages/AdminServicios";
 import AdminPanel from "./pages/AdminPanel";
-
+import AdminProductos from "./pages/AdminProductos";
 
 
 // ...existing code...
@@ -77,6 +77,7 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/servicios" element={<AdminServicios />} />
           <Route path="/admin/dashboard" element={<AdminPanel />} />
+          <Route path="/admin/productos" element={<AdminProductos />} />
 
 
         </Routes>
