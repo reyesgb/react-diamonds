@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Navbar, Container, Nav, Form, FormControl, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Form, FormControl } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useCarrito } from "../context/CarritoContext";
-import { useAuth } from "../context/AuthContext"; // ✅
+import Logo from "../assets/images/logo.png"; // 👈 nuevo logo
 
 function NavbarPacrima() {
   const navigate = useNavigate();
   const { carrito } = useCarrito();
-  const { user, isAdmin, logout } = useAuth(); // ✅
   const [busqueda, setBusqueda] = useState("");
   const [sugerencias, setSugerencias] = useState([]);
 
@@ -18,14 +17,16 @@ function NavbarPacrima() {
     { nombre: "Aplicaciones Móviles", ruta: "/servicios/apps" },
     { nombre: "Consultoría Cloud", ruta: "/servicios/cloud" },
     { nombre: "Soporte Técnico", ruta: "/servicios/soporte" },
+    { nombre: "Pablo Reyes", ruta: "/nosotros#pablo" },
+    { nombre: "Cristian Padilla", ruta: "/nosotros#cristian" },
+    { nombre: "Matías Vargas", ruta: "/nosotros#matias" },
   ];
 
   const manejarCambio = (e) => {
     const valor = e.target.value;
     setBusqueda(valor);
-    if (valor.trim() === "") {
-      setSugerencias([]);
-    } else {
+    if (valor.trim() === "") setSugerencias([]);
+    else {
       const filtradas = servicios.filter((s) =>
         s.nombre.toLowerCase().includes(valor.toLowerCase())
       );
@@ -41,67 +42,52 @@ function NavbarPacrima() {
 
   return (
     <Navbar bg="light" expand="lg" className="shadow-sm mb-4">
-      <Container fluid className="px-4">
-        <div className="d-flex align-items-center">
-          <Navbar.Brand as={Link} to="/" className="fw-bold me-3">
-            Pacrima
-          </Navbar.Brand>
-          <Nav className="me-3">
-            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
-            <Nav.Link as={Link} to="/servicios">Servicios</Nav.Link>
-            <Nav.Link as={Link} to="/nosotros">Nosotros</Nav.Link>
-            <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
-          </Nav>
+      <Container>
+        {/* LOGO Y NOMBRE */}
+        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+          <img
+            src={Logo}
+            alt="Data Diamonds Logo"
+            width="40"
+            height="40"
+            className="me-2"
+          />
+          <span className="fw-bold fs-5 text-dark">Data Diamonds</span>
+        </Navbar.Brand>
+
+        <Nav className="ms-auto align-items-center gap-3">
+          {/* LINKS PRINCIPALES */}
+          <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+          <Nav.Link as={Link} to="/servicios">Servicios</Nav.Link>
+          <Nav.Link as={Link} to="/nosotros">Nosotros</Nav.Link>
+          <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
 
           <div
-            style={{
-              borderLeft: "1px solid #ccc",
-              height: "30px",
-              margin: "0 20px",
-            }}
+            className="vr mx-2"
+            style={{ height: "24px", opacity: "0.5" }}
           ></div>
-        </div>
 
-        <div className="d-flex align-items-center ms-auto gap-3">
-          {!user && !isAdmin ? (
-            <>
-              <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
-              <div
-                style={{
-                  borderLeft: "1px solid #ccc",
-                  height: "25px",
-                }}
-              ></div>
-              <Nav.Link as={Link} to="/register">Registrar</Nav.Link>
-            </>
-          ) : (
-            <>
-              {isAdmin && (
-                <Nav.Link as={Link} to="/admin/dashboard" className="fw-semibold text-danger">
-                  Panel Admin
-                </Nav.Link>
-              )}
-              <Button variant="outline-danger" size="sm" onClick={logout}>
-                Cerrar sesión
-              </Button>
-            </>
-          )}
+          {/* LOGIN Y REGISTRO */}
+          <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
+          <Nav.Link as={Link} to="/register">Registrar</Nav.Link>
 
-          <Nav.Link as={Link} to="/carrito" className="fw-semibold">
-            🛒 ({carrito.length})
-          </Nav.Link>
+          <div
+            className="vr mx-2"
+            style={{ height: "24px", opacity: "0.5" }}
+          ></div>
 
-          <div className="position-relative" style={{ width: "250px" }}>
-            <Form className="d-flex">
-              <FormControl
-                type="search"
-                placeholder="Buscar..."
-                value={busqueda}
-                onChange={manejarCambio}
-                className="rounded-pill px-3"
-              />
-            </Form>
+          {/* CARRITO */}
+          <Nav.Link as={Link} to="/carrito">🛒 ({carrito.length})</Nav.Link>
 
+          {/* BUSCADOR */}
+          <Form className="d-flex ms-3 position-relative">
+            <FormControl
+              type="search"
+              placeholder="Buscar..."
+              value={busqueda}
+              onChange={manejarCambio}
+              style={{ borderRadius: "20px", padding: "6px 12px" }}
+            />
             {sugerencias.length > 0 && (
               <div
                 className="position-absolute bg-white border mt-1 w-100 rounded shadow-sm"
@@ -119,8 +105,8 @@ function NavbarPacrima() {
                 ))}
               </div>
             )}
-          </div>
-        </div>
+          </Form>
+        </Nav>
       </Container>
     </Navbar>
   );
