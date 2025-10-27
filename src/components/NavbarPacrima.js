@@ -12,6 +12,7 @@ function NavbarPacrima() {
   const [busqueda, setBusqueda] = useState("");
   const [sugerencias, setSugerencias] = useState([]);
 
+  // 🔍 Actualizamos las rutas de socios para llevar directo a su perfil
   const servicios = [
     { nombre: "Desarrollo Web", ruta: "/servicios/desarrollo-web" },
     { nombre: "Diseño UX/UI", ruta: "/servicios/diseno-ux" },
@@ -19,9 +20,10 @@ function NavbarPacrima() {
     { nombre: "Aplicaciones Móviles", ruta: "/servicios/apps" },
     { nombre: "Consultoría Cloud", ruta: "/servicios/cloud" },
     { nombre: "Soporte Técnico", ruta: "/servicios/soporte" },
-    { nombre: "Pablo Reyes", ruta: "/nosotros#pablo" },
-    { nombre: "Cristian Padilla", ruta: "/nosotros#cristian" },
-    { nombre: "Matías Vargas", ruta: "/nosotros#matias" },
+    // 👇 rutas directas a perfiles de socios
+    { nombre: "Pablo Reyes", ruta: "/socios/pablo" },
+    { nombre: "Cristian Padilla", ruta: "/socios/cristian" },
+    { nombre: "Matías Vargas", ruta: "/socios/matias" },
   ];
 
   const manejarCambio = (e) => {
@@ -98,7 +100,7 @@ function NavbarPacrima() {
           <Form className="d-flex ms-3 position-relative">
             <FormControl
               type="search"
-              placeholder="Buscar..."
+              placeholder="Buscar servicios o socios..."
               value={busqueda}
               onChange={manejarCambio}
               style={{ borderRadius: "20px", padding: "6px 12px" }}

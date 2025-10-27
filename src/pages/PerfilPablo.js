@@ -1,42 +1,56 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import PabloImg from "../assets/images/Equipo/Pablo.jpg";
 
 function PerfilPablo() {
+  const navigate = useNavigate();
+
   return (
     <Container className="py-5">
       <Row className="align-items-center">
         <Col md={5} className="mb-4 mb-md-0">
-          <img
-            src="/images/fotos_equipo/pablo.jpg"
-            alt="Pablo Reyes"
-            className="img-fluid rounded shadow"
-          />
+          <Card className="shadow border-0">
+            <Card.Img
+              src={PabloImg}
+              alt="Pablo Reyes"
+              className="rounded"
+              style={{ objectFit: "cover", height: "350px" }}
+            />
+          </Card>
         </Col>
+
         <Col md={7}>
           <h1 className="fw-bold text-primary">Pablo Reyes</h1>
-          <h5 className="text-muted mb-3">Desarrollador Web Fullstack</h5>
+          <h5 className="text-muted mb-3">Especialista en Ciberseguridad</h5>
           <p>
-            Desarrollador con amplia experiencia en diseño y construcción de aplicaciones modernas,
-            escalables y seguras, utilizando tecnologías como React, Node.js y bases de datos Oracle.
+            Pablo se dedica a proteger infraestructuras tecnológicas mediante la aplicación
+            de estrategias avanzadas de seguridad digital. Con amplia experiencia en análisis
+            de vulnerabilidades y gestión de incidentes, asegura entornos confiables.
           </p>
 
-          <h4 className="mt-4">Estudios</h4>
+          <h4 className="mt-4 text-secondary">🎓 Estudios</h4>
           <ul>
-            <li>Ingeniería en Informática — DUOC UC</li>
-            <li>Certificación Fullstack JavaScript</li>
-            <li>Especialización en Node.js y React</li>
+            <li>Ingeniería en Ciberseguridad — Universidad de Chile</li>
+            <li>Certificación CEH (Certified Ethical Hacker)</li>
+            <li>Diplomado en Seguridad de Redes</li>
           </ul>
 
-          <h4 className="mt-4">Servicios</h4>
+          <h4 className="mt-4 text-secondary">💼 Servicios</h4>
           <ul>
-            <li>Desarrollo de sitios web corporativos</li>
-            <li>Aplicaciones SPA y APIs REST</li>
-            <li>Integración con bases de datos</li>
+            <li>Análisis de vulnerabilidades y pentesting</li>
+            <li>Gestión de incidentes y respuesta rápida</li>
+            <li>Consultoría en políticas de seguridad</li>
           </ul>
 
-          <Button variant="outline-primary" href="/nosotros" className="mt-3">
-            ← Volver
-          </Button>
+          <div className="d-flex gap-3 mt-4">
+            <Button variant="outline-primary" onClick={() => navigate(-1)}>
+              ← Volver atrás
+            </Button>
+            <Button variant="primary" onClick={() => navigate("/contacto")}>
+              Contactar a Pablo
+            </Button>
+          </div>
         </Col>
       </Row>
     </Container>

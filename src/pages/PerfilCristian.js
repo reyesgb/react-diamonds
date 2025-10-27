@@ -1,42 +1,59 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import CristianImg from "../assets/images/Equipo/Cristian.jpg"; // ✅ Importar imagen correctamente
 
 function PerfilCristian() {
+  const navigate = useNavigate();
+
   return (
     <Container className="py-5">
       <Row className="align-items-center">
+        {/* Imagen */}
         <Col md={5} className="mb-4 mb-md-0">
-          <img
-            src="/images/Equipo/Cristian.jpg"
-            alt="Cristian Padilla"
-            className="img-fluid rounded shadow"
-          />
+          <Card className="shadow border-0">
+            <Card.Img
+              src={CristianImg}
+              alt="Cristian Padilla"
+              className="rounded"
+              style={{ objectFit: "cover", height: "350px" }}
+            />
+          </Card>
         </Col>
+
+        {/* Información */}
         <Col md={7}>
           <h1 className="fw-bold text-primary">Cristian Padilla</h1>
-          <h5 className="text-muted mb-3">Diseñador UX/UI</h5>
+          <h5 className="text-muted mb-3">Desarrollador Frontend</h5>
+
           <p>
-            Diseñador especializado en crear interfaces intuitivas y accesibles. Su enfoque está en la
-            experiencia del usuario, combinando estética, funcionalidad y usabilidad.
+            Cristian es un desarrollador enfocado en la creación de interfaces funcionales,
+            modernas y responsivas. Su trabajo combina la precisión técnica con un fuerte
+            enfoque en la experiencia del usuario, utilizando las últimas tecnologías web.
           </p>
 
-          <h4 className="mt-4">Estudios</h4>
+          <h4 className="mt-4 text-secondary">🎓 Estudios</h4>
           <ul>
-            <li>Diseño Gráfico Profesional — DUOC UC</li>
-            <li>Diplomado en UX Research y Usabilidad</li>
-            <li>Especialización en Figma y Adobe XD</li>
+            <li>Ingeniería en Informática — DUOC UC</li>
+            <li>Diplomado en Desarrollo Frontend con React</li>
+            <li>Certificación en Responsive Design y Accesibilidad Web</li>
           </ul>
 
-          <h4 className="mt-4">Servicios</h4>
+          <h4 className="mt-4 text-secondary">💼 Servicios</h4>
           <ul>
-            <li>Diseño de interfaces centradas en el usuario</li>
-            <li>Maquetación web con HTML, CSS y Bootstrap</li>
-            <li>Optimización de experiencia digital</li>
+            <li>Desarrollo de sitios y aplicaciones web</li>
+            <li>Optimización de rendimiento y SEO técnico</li>
+            <li>Integración con APIs y sistemas backend</li>
           </ul>
 
-          <Button variant="outline-primary" href="/nosotros" className="mt-3">
-            ← Volver
-          </Button>
+          <div className="d-flex gap-3 mt-4">
+            <Button variant="outline-primary" onClick={() => navigate(-1)}>
+              ← Volver atrás
+            </Button>
+            <Button variant="primary" onClick={() => navigate("/contacto")}>
+              Contactar a Cristian
+            </Button>
+          </div>
         </Col>
       </Row>
     </Container>
