@@ -20,10 +20,12 @@ export default function Footer() {
 
           <Col md={4} className="text-md-center">
             <nav className="footer-nav">
+            <Link to="blog">Blog</Link>
+            <span className="sep"> - </span>
               <Link to="/nosotros">Nosotros</Link>
-              <span className="sep">·</span>
+              <span className="sep"> - </span>
               <Link to="/servicios">Servicios</Link>
-              <span className="sep">·</span>
+              <span className="sep"> - </span>
               <Link to="/contacto">Contacto</Link>
             </nav>
           </Col>

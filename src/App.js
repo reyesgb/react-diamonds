@@ -36,6 +36,11 @@ import AdminServicios from "./pages/AdminServicios";
 import AdminPanel from "./pages/AdminPanel";
 import AdminProductos from "./pages/AdminProductos";
 
+// Blog
+import Blog from "./pages/Blog";
+import DetalleBlog from "./pages/DetalleBlog";
+
+
 
 // ...existing code...
 
@@ -78,6 +83,9 @@ function App() {
           <Route path="/admin/servicios" element={<AdminServicios />} />
           <Route path="/admin/dashboard" element={<AdminPanel />} />
           <Route path="/admin/productos" element={<AdminProductos />} />
+
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<DetalleBlog />} />
 
 
         </Routes>
