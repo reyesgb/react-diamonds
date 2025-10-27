@@ -1,37 +1,40 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-function Footer() {
+const BRAND = "Data Diamonds";
+
+export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-dark text-light py-4 mt-auto">
+    <footer className="site-footer mt-5">
       <Container>
-        <Row className="align-items-center">
+        <Row className="gy-3 align-items-center">
           <Col md={4}>
-            <h5 className="fw-bold">Pacrima</h5>
-            <p className="small mb-0">
+            <h5 className="mb-0">{BRAND}</h5>
+            <small className="text-muted d-block">
               Soluciones digitales profesionales y personalizadas para tu negocio.
-            </p>
+            </small>
           </Col>
-          <Col md={4} className="text-center my-3 my-md-0">
-            <a href="/nosotros" className="text-light mx-2 small text-decoration-none">
-              Nosotros
-            </a>
-            <a href="/servicios" className="text-light mx-2 small text-decoration-none">
-              Servicios
-            </a>
-            <a href="/contacto" className="text-light mx-2 small text-decoration-none">
-              Contacto
-            </a>
+
+          <Col md={4} className="text-md-center">
+            <nav className="footer-nav">
+              <Link to="/nosotros">Nosotros</Link>
+              <span className="sep">·</span>
+              <Link to="/servicios">Servicios</Link>
+              <span className="sep">·</span>
+              <Link to="/contacto">Contacto</Link>
+            </nav>
           </Col>
-          <Col md={4} className="text-md-end text-center">
-            <p className="small mb-0">
-              © {new Date().getFullYear()} Pacrima — Todos los derechos reservados.
-            </p>
+
+          <Col md={4} className="text-md-end">
+            <small className="text-muted">
+              © {year} {BRAND} — Todos los derechos reservados.
+            </small>
           </Col>
         </Row>
       </Container>
     </footer>
   );
 }
-
-export default Footer;
