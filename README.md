@@ -113,3 +113,8 @@ Inicio (/)
 El sitio estará disponible en http://localhost:3000
 
 Proyecto desarrollado con fines académicos — Duoc UC, Evaluación 2 (Ingeniería en Informática).
+
+
+Cuenta ADMIN para pruebas:
+admin@admin.cl
+admin123
