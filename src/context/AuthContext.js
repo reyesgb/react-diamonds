@@ -1,3 +1,4 @@
+// ✅ AuthContext.js (actualizado)
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -7,12 +8,10 @@ export function AuthProvider({ children }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Cargar sesión desde localStorage
     const userData = localStorage.getItem("userLogged");
     const adminData = localStorage.getItem("adminLogged");
-
     if (adminData === "true") setIsAdmin(true);
-    else if (userData) setUser(JSON.parse(userData));
+    if (userData) setUser(JSON.parse(userData));
   }, []);
 
   const login = (data) => {
@@ -41,8 +40,10 @@ export function AuthProvider({ children }) {
     setIsAdmin(false);
   };
 
+  const isLoggedIn = isAdmin || !!user;
+
   return (
-    <AuthContext.Provider value={{ user, isAdmin, login, logout }}>
+    <AuthContext.Provider value={{ user, isAdmin, isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

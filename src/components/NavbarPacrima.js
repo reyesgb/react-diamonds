@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Navbar, Container, Nav, Form, FormControl } from "react-bootstrap";
+import { Navbar, Container, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useCarrito } from "../context/CarritoContext";
-import Logo from "../assets/images/logo.png"; // 👈 nuevo logo
+import { useAuth } from "../context/AuthContext";
+import Logo from "../assets/images/logo.png";
 
 function NavbarPacrima() {
   const navigate = useNavigate();
   const { carrito } = useCarrito();
+  const { isLoggedIn, isAdmin, user, logout } = useAuth();
   const [busqueda, setBusqueda] = useState("");
   const [sugerencias, setSugerencias] = useState([]);
 
@@ -43,7 +45,7 @@ function NavbarPacrima() {
   return (
     <Navbar bg="light" expand="lg" className="shadow-sm mb-4">
       <Container>
-        {/* LOGO Y NOMBRE */}
+        {/* LOGO */}
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
           <img
             src={Logo}
@@ -56,25 +58,38 @@ function NavbarPacrima() {
         </Navbar.Brand>
 
         <Nav className="ms-auto align-items-center gap-3">
-          {/* LINKS PRINCIPALES */}
           <Nav.Link as={Link} to="/">Inicio</Nav.Link>
           <Nav.Link as={Link} to="/servicios">Servicios</Nav.Link>
           <Nav.Link as={Link} to="/nosotros">Nosotros</Nav.Link>
           <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
 
-          <div
-            className="vr mx-2"
-            style={{ height: "24px", opacity: "0.5" }}
-          ></div>
+          <div className="vr mx-2" style={{ height: "24px", opacity: "0.5" }}></div>
 
-          {/* LOGIN Y REGISTRO */}
-          <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
-          <Nav.Link as={Link} to="/register">Registrar</Nav.Link>
+          {/* Si hay sesión, mostrar usuario y botón logout */}
+          {isLoggedIn ? (
+            <>
+              <span className="text-muted small">
+                👋 {isAdmin ? "Admin" : user?.nombre?.split(" ")[0]}
+              </span>
+              <Button
+                variant="outline-danger"
+                size="sm"
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+              >
+                Cerrar sesión
+              </Button>
+            </>
+          ) : (
+            <>
+              <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
+              <Nav.Link as={Link} to="/register">Registrar</Nav.Link>
+            </>
+          )}
 
-          <div
-            className="vr mx-2"
-            style={{ height: "24px", opacity: "0.5" }}
-          ></div>
+          <div className="vr mx-2" style={{ height: "24px", opacity: "0.5" }}></div>
 
           {/* CARRITO */}
           <Nav.Link as={Link} to="/carrito">🛒 ({carrito.length})</Nav.Link>
