@@ -1,52 +1,82 @@
-// ✅ AuthContext.js (actualizado)
-import React, { createContext, useContext, useState, useEffect } from "react";
+// src/context/AuthContext.jsx
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../firebase/firebaseConfig";
+import {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  getIdToken,
+  getIdTokenResult,
+} from "firebase/auth";
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);          // objeto de Firebase
+  const [role, setRole] = useState(null);          // "ADMIN" o "USER"
+  const [loading, setLoading] = useState(true);    // mientras verifica sesión
 
+  // ✅ Mantener sesión al recargar (usa Firebase + localStorage)
   useEffect(() => {
-    const userData = localStorage.getItem("userLogged");
-    const adminData = localStorage.getItem("adminLogged");
-    if (adminData === "true") setIsAdmin(true);
-    if (userData) setUser(JSON.parse(userData));
+    const unsub = onAuthStateChanged(auth, async (fbUser) => {
+      if (fbUser) {
+        setUser(fbUser);
+        const token = await getIdToken(fbUser, true);
+        localStorage.setItem("dd_token", token);
+
+        const tokenResult = await getIdTokenResult(fbUser);
+        const claimsRole = tokenResult.claims.role || "USER";
+        setRole(claimsRole);
+        localStorage.setItem("dd_role", claimsRole);
+      } else {
+        setUser(null);
+        setRole(null);
+        localStorage.removeItem("dd_token");
+        localStorage.removeItem("dd_role");
+      }
+      setLoading(false);
+    });
+
+    return () => unsub();
   }, []);
 
-  const login = (data) => {
-    if (data.email === "admin@admin.cl" && data.pass === "admin123") {
-      localStorage.setItem("adminLogged", "true");
-      setIsAdmin(true);
-      return { success: true, isAdmin: true };
-    } else {
-      const users = JSON.parse(localStorage.getItem("users") || "[]");
-      const found = users.find(
-        (u) => u.email === data.email.trim() && u.pass === data.pass
-      );
-      if (found) {
-        localStorage.setItem("userLogged", JSON.stringify(found));
-        setUser(found);
-        return { success: true, isAdmin: false };
-      }
-    }
-    return { success: false };
+  const login = async (email, password) => {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    const fbUser = res.user;
+    setUser(fbUser);
+
+    const token = await getIdToken(fbUser, true);
+    localStorage.setItem("dd_token", token);
+
+    const tokenResult = await getIdTokenResult(fbUser);
+    const claimsRole = tokenResult.claims.role || "USER";
+    setRole(claimsRole);
+    localStorage.setItem("dd_role", claimsRole);
   };
 
-  const logout = () => {
-    localStorage.removeItem("userLogged");
-    localStorage.removeItem("adminLogged");
+  const logout = async () => {
+    await signOut(auth);
     setUser(null);
-    setIsAdmin(false);
+    setRole(null);
+    localStorage.removeItem("dd_token");
+    localStorage.removeItem("dd_role");
   };
 
-  const isLoggedIn = isAdmin || !!user;
+  const value = {
+    user,
+    role,
+    loading,
+    login,
+    logout,
+    isAdmin: role === "ADMIN",
+    isUser: !!user,
+  };
 
   return (
-    <AuthContext.Provider value={{ user, isAdmin, isLoggedIn, login, logout }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
-}
+};
 
 export const useAuth = () => useContext(AuthContext);
