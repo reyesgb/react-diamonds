@@ -9,18 +9,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/estilos.css";
 
 // Contexto de autenticación
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 
 // Componentes
 import NavbarPacrima from "./components/NavbarPacrima";
 import Footer from "./components/Footer";
 
+
 // Páginas principales
+import OrdersPage from "./pages/OrdersPage";
 import Inicio from "./pages/Inicio";
 import Servicios from "./pages/Servicios";
 import Nosotros from "./pages/Nosotros";
 import Contacto from "./pages/Contacto";
-import Login from "./pages/Login";
+import LoginPage from "./pages/LoginPage";
 import Register from "./pages/Register";
 import Carrito from "./pages/Carrito";
 
@@ -76,17 +78,16 @@ const AdminRoute = ({ children }) => {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <NavbarPacrima />
-        <div className="content-wrapper">
-          <Routes>
+    <Router>
+      <NavbarPacrima />
+      <div className="content-wrapper">
+        <Routes>
             {/* Públicas */}
             <Route path="/" element={<Inicio />} />
             <Route path="/servicios" element={<Servicios />} />
             <Route path="/nosotros" element={<Nosotros />} />
             <Route path="/contacto" element={<Contacto />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} />
 
             {/* Detalles individuales */}
@@ -121,6 +122,10 @@ function App() {
             <Route path="/socios/pablo" element={<PerfilPablo />} />
             <Route path="/socios/cristian" element={<PerfilCristian />} />
             <Route path="/socios/matias" element={<PerfilMatias />} />
+
+
+            <Route path="/ordenes-servicio" element={<OrdersPage />} />
+
 
             {/* ADMIN – protegidas por rol */}
             <Route
@@ -167,7 +172,6 @@ function App() {
         </div>
         <Footer />
       </Router>
-    </AuthProvider>
   );
 }
 

@@ -14,16 +14,19 @@ function Login() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    const result = login(form);
+    try {
+      // login espera (email, password)
+      await login(form.email, form.pass);
 
-    if (result.success) {
-      if (result.isAdmin) navigate("/admin/dashboard");
+      // después del login el AuthContext guarda role en localStorage
+      const role = localStorage.getItem("dd_role");
+      if (role === "ADMIN") navigate("/admin/dashboard");
       else navigate("/");
-    } else {
+    } catch (err) {
       setError("❌ Correo o contraseña incorrectos.");
     }
   };

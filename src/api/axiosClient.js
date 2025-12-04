@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api", // ajusta si usas otro puerto o contexto
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:8080/api", // usa env var si está disponible
 });
 
 // Interceptor para agregar el token en cada request
