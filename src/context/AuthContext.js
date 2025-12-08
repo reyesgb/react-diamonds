@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   // ✅ Mantener sesión al recargar (usa Firebase + localStorage)
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
+      console.log("onAuthStateChanged: ", fbUser?.email);
       if (fbUser) {
         setUser(fbUser);
         const token = await getIdToken(fbUser, true);

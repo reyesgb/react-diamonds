@@ -1,5 +1,10 @@
+// src/pages/Register.jsx
 import React, { useState } from "react";
 import { Container, Form, Button, Row, Col, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebase";
+import api from "../api/axiosClient";
 
 function Register() {
   const [form, setForm] = useState({
@@ -14,6 +19,10 @@ function Register() {
   });
 
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const regiones = [
     "Región Metropolitana",
@@ -37,35 +46,76 @@ function Register() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess(false);
 
     // Validaciones básicas
     if (form.email !== form.confirmarEmail) {
-      alert("❌ Los correos no coinciden.");
+      setError("❌ Los correos no coinciden.");
       return;
     }
     if (form.pass !== form.confirmarPass) {
-      alert("❌ Las contraseñas no coinciden.");
+      setError("❌ Las contraseñas no coinciden.");
       return;
     }
 
-    // Guardar en localStorage
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    users.push({ ...form, createdAt: new Date().toISOString() });
-    localStorage.setItem("users", JSON.stringify(users));
+    try {
+      setLoading(true);
 
-    setSuccess(true);
-    setForm({
-      nombre: "",
-      email: "",
-      confirmarEmail: "",
-      pass: "",
-      confirmarPass: "",
-      telefono: "",
-      region: "",
-      comuna: "",
-    });
+      // 1️⃣ Crear usuario en Firebase
+      const cred = await createUserWithEmailAndPassword(
+        auth,
+        form.email,
+        form.pass
+      );
+      const fbUser = cred.user;
+
+      // 2️⃣ Registrar usuario en tu backend (Oracle)
+      await api.post("/users", {
+        uidFirebase: fbUser.uid,
+        email: fbUser.email,
+        nombre: form.nombre,
+        rol: "USER",
+        activo: true,
+        // Si más adelante agregas columnas en la tabla USERS
+        // podrías mandar telefono, region, comuna, etc.
+      });
+
+      // 3️⃣ Mostrar éxito y limpiar form
+      setSuccess(true);
+      setForm({
+        nombre: "",
+        email: "",
+        confirmarEmail: "",
+        pass: "",
+        confirmarPass: "",
+        telefono: "",
+        region: "",
+        comuna: "",
+      });
+
+      // Opcional: redirigir al login después de un ratito
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (err) {
+      console.error("Error en registro:", err);
+      const status = err.response?.status;
+      const backendMsg = err.response?.data?.message || err.message;
+
+      // Mensaje amigable
+      if (status === 400 || status === 409) {
+        setError(
+          `No se pudo completar el registro: ${backendMsg || "Revisa los datos ingresados."}`
+        );
+      } else {
+        setError("Ocurrió un error al registrar el usuario. Intenta nuevamente.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -79,7 +129,18 @@ function Register() {
           dismissible
           className="text-center"
         >
-          ✅ Registro exitoso. Ahora puedes iniciar sesión.
+          ✅ Registro exitoso. Serás redirigido a Iniciar Sesión.
+        </Alert>
+      )}
+
+      {error && (
+        <Alert
+          variant="danger"
+          onClose={() => setError("")}
+          dismissible
+          className="text-center"
+        >
+          {error}
         </Alert>
       )}
 
@@ -217,8 +278,9 @@ function Register() {
           variant="primary"
           type="submit"
           className="w-100 mt-2 fw-bold"
+          disabled={loading}
         >
-          REGISTRAR
+          {loading ? "Registrando..." : "REGISTRAR"}
         </Button>
       </Form>
     </Container>

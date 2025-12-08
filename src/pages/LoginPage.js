@@ -1,25 +1,25 @@
+// src/pages/LoginPage.jsx
 import React, { useState } from "react";
-import { auth } from "../firebase/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from "../context/AuthContext";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  // ⬅️ Traemos login desde el contexto
+  const { login } = useAuth();
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
-      const userCred = await signInWithEmailAndPassword(auth, email, password);
-      const token = await userCred.user.getIdToken();
-
-      console.log("TOKEN FIREBASE:", token);
-
-      localStorage.setItem("token", token); // Guardar para usar en llamadas al backend
+      // ⬅️ Usamos la función del contexto (ella habla con Firebase y guarda dd_token)
+      await login(email, password);
 
       alert("Login exitoso");
-      window.location.href = "/"; // Redirige al home
+      window.location.href = "/"; // si después quieres, lo cambiamos por navigate("/")
     } catch (err) {
       console.error(err);
       setError("Credenciales incorrectas");
