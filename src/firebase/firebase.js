@@ -1,8 +1,6 @@
-// src/firebase/firebaseConfig.js
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-// MISMA CONFIG que usaste en login.html
 const firebaseConfig = {
   apiKey: "AIzaSyBhJXF0r7YuwOvbvePE_Waj0FQXzga8Hfk",
   authDomain: "datadiamond-f478e.firebaseapp.com",
