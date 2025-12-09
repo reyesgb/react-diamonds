@@ -79,6 +79,43 @@ function AdminDashboard() {
             </Card.Body>
           </Card>
         </Col>
+
+        {/* Card: Socios */}
+        <Col md={4}>
+          <Card className="h-100 shadow-sm">
+            <Card.Body>
+              <Card.Title>Socios / Equipo</Card.Title>
+              <Card.Text>
+                Administra la información de los profesionales que aparecen en la sección "Nosotros".
+              </Card.Text>
+              <Button
+                variant="primary"
+                onClick={() => navigate("/admin/socios")}
+              >
+                Ir a Socios
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        {/* Card: Contacto */}
+        <Col md={4}>
+          <Card className="h-100 shadow-sm">
+            <Card.Body>
+              <Card.Title>Mensajes de Contacto</Card.Title>
+              <Card.Text>
+                Revisa los mensajes enviados desde el formulario de contacto.
+              </Card.Text>
+              <Button
+                variant="primary"
+                onClick={() => navigate("/admin/contactos")}
+              >
+                Ver mensajes
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+
       </Row>
     </Container>
   );

@@ -53,6 +53,9 @@ import DetalleBlog from "./pages/DetalleBlog";
 // Admin Usuarios
 import AdminUsuarios from "./pages/AdminUsuarios";
 
+import AdminSocios from "./pages/AdminSocios";
+import AdminContactos from "./pages/AdminContactos";
+
 
 
 // =======================
@@ -194,6 +197,25 @@ function App() {
               </AdminRoute>
             }
           />
+
+          <Route
+            path="/admin/socios"
+            element={
+              <AdminRoute>
+                <AdminSocios />
+              </AdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/contactos"
+            element={
+              <AdminRoute>
+                <AdminContactos />
+              </AdminRoute>
+            }
+          />
+
 
           {/* Blog */}
           <Route path="/blog" element={<Blog />} />

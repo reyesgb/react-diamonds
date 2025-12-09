@@ -1,63 +1,83 @@
-import React from "react";
+// src/pages/Nosotros.jsx
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import "../assets/css/estilos.css";
-
-import Pablo from "../assets/images/Equipo/Pablo.jpg";
-import Cristian from "../assets/images/Equipo/Cristian.jpg";
-import Matias from "../assets/images/Equipo/Matias.jpg";
+import api from "../api/axiosClient";
 
 function Nosotros() {
-  const socios = [
-    {
-      id: 1,
-      nombre: "Pablo Reyes",
-      rol: "Desarrollador Web Fullstack",
-      descripcion: "Especialista en desarrollo de aplicaciones web modernas y escalables.",
-      imagen: Pablo,
-      perfil: "/persona1",
-    },
-    {
-      id: 2,
-      nombre: "Cristian Padilla",
-      rol: "Diseñador UX/UI",
-      descripcion: "Diseña interfaces centradas en el usuario y en la accesibilidad.",
-      imagen: Cristian,
-      perfil: "/persona2",
-    },
-    {
-      id: 3,
-      nombre: "Matías Vargas",
-      rol: "Consultor en Ciberseguridad",
-      descripcion: "Protege la infraestructura digital y los datos de los clientes.",
-      imagen: Matias,
-      perfil: "/persona3",
-    },
-  ];
+  const [socios, setSocios] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSocios = async () => {
+      try {
+        const res = await api.get("/partners/public");
+        setSocios(res.data || []);
+      } catch (err) {
+        console.error("Error cargando socios:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSocios();
+  }, []);
+
+  if (loading) {
+    return (
+      <Container className="py-5">
+        <p>Cargando equipo...</p>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-5">
-      <h1 className="text-center mb-4 fw-bold">Nuestro Equipo</h1>
+      <h1 className="text-center mb-3">Nuestro Equipo</h1>
       <p className="text-center text-muted mb-5">
-        Conoce a los profesionales detrás de <strong>Pacrima</strong>, un grupo de especialistas comprometidos con la innovación y la calidad.
+        Conoce a los profesionales detrás de Data Diamonds.
       </p>
 
-      <Row>
+      <Row className="g-4">
         {socios.map((s) => (
-          <Col key={s.id} md={4} className="mb-4">
-            <Card className="h-100 shadow-sm border-0">
-              <Card.Img
-                variant="top"
-                src={s.imagen}
-                alt={s.nombre}
-                style={{ height: "260px", objectFit: "cover" }}
-              />
-              <Card.Body className="d-flex flex-column">
-                <h5 className="card-title fw-bold text-primary">{s.nombre}</h5>
-                <p className="text-muted mb-1">{s.rol}</p>
-                <p className="flex-grow-1">{s.descripcion}</p>
-                <Button variant="outline-primary" href={s.perfil}>
-                  Ver perfil
-                </Button>
+          <Col md={4} key={s.id}>
+            <Card className="h-100 shadow-sm">
+              {s.imagenUrl && (
+                <Card.Img
+                  variant="top"
+                  src={s.imagenUrl}
+                  alt={s.nombre}
+                  style={{ height: "230px", objectFit: "cover" }}
+                />
+              )}
+              <Card.Body>
+                <Card.Title>{s.nombre}</Card.Title>
+                <h6 className="text-primary">{s.rol}</h6>
+                <Card.Text>{s.descripcion}</Card.Text>
+                {(s.linkedinUrl || s.githubUrl) && (
+                  <div className="d-flex gap-2 mt-3">
+                    {s.linkedinUrl && (
+                      <Button
+                        variant="outline-primary"
+                        size="sm"
+                        as="a"
+                        href={s.linkedinUrl}
+                        target="_blank"
+                      >
+                        LinkedIn
+                      </Button>
+                    )}
+                    {s.githubUrl && (
+                      <Button
+                        variant="outline-dark"
+                        size="sm"
+                        as="a"
+                        href={s.githubUrl}
+                        target="_blank"
+                      >
+                        GitHub
+                      </Button>
+                    )}
+                  </div>
+                )}
               </Card.Body>
             </Card>
           </Col>
